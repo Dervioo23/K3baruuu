@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistem Inspeksi K3 Digital</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="responsive.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-content">
+          <div class="header-left">
+            <div class="header-icon">
+              <img src="safe_n_risk.png" alt="Logo K3" class="header-logo">
+            </div>
+            <div class="header-text">
+              <h1>Sistem Inspeksi K3 Digital</h1>
+              <p>Airport Quality & Safety Management System Bandara Internasional MinangKabau</p>
+            </div>
+          </div>
+          <div class="header-icon-right">
+            <img src="WhatsApp_Image_2025-08-07_at_09.19.09-removebg-preview.png" alt="Logo Bandara" class="header-logo-right">
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Form -->
+      <main class="main-content">
+        <form id="inspectionForm" class="inspection-form">
+          <!-- Tanggal Inspeksi -->
+          <div class="form-group">
+            <label for="inspectionDate" class="form-label">
+              <i class="fas fa-calendar-alt"></i>
+              Tanggal Inspeksi
+            </label>
+            <input type="date" id="inspectionDate" name="inspectionDate" class="form-input" />
+          </div>
+
+          <!-- Nama Inspektor -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-user"></i>
+              Nama Inspektor
+            </label>
+            <div class="inspector-buttons">
+              <button type="button" class="inspector-btn" data-name="Hari">Hari</button>
+              <button type="button" class="inspector-btn" data-name="Rahmat">Rahmat</button>
+              <button type="button" class="inspector-btn" data-name="Syukra">Syukra</button>
+              <button type="button" class="inspector-btn" data-name="Ficry">Ficry</button>
+              <button type="button" class="inspector-btn" data-name="Internal Lainnya">Internal Lainnya</button>
+              <button type="button" class="inspector-btn" data-name="Eksternal">Eksternal</button>
+            </div>
+            <input type="text" id="inspectorName" name="inspectorName" class="form-input" placeholder="Nama inspektor akan muncul di sini" readonly />
+          </div>
+
+          <!-- Upload Foto -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-camera"></i>
+              Upload Foto Temuan
+            </label>
+            <div class="upload-section">
+              <div class="upload-buttons">
+                <!-- Perubahan: Menggunakan label untuk memicu input file dengan andal -->
+                <label for="photoInput" class="upload-btn camera-btn">
+                  <i class="fas fa-camera"></i>
+                  Ambil Foto
+                </label>
+                <label for="galleryInput" class="upload-btn gallery-btn">
+                  <i class="fas fa-folder-open"></i>
+                  Pilih File
+                </label>
+              </div>
+              <!-- Input file tetap ada dan disembunyikan -->
+              <input type="file" id="photoInput" accept="image/*" capture="environment" style="display: none;">
+              <input type="file" id="galleryInput" accept="image/*" style="display: none;">
+
+              <div id="photoPreview" class="photo-preview" style="display: none">
+                <img id="previewImage" src="" alt="Preview" />
+                <button type="button" id="removePhoto" class="remove-photo-btn">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deskripsi Temuan -->
+          <div class="form-group">
+            <label for="findingDescription" class="form-label">
+              <i class="fas fa-edit"></i>
+              Deskripsi Temuan
+            </label>
+
+            <div class="template-section">
+              <div class="template-header">
+                <p class="template-label">Template Cepat (Berdasarkan Penggunaan):</p>
+                <div class="template-controls">
+                  <button type="button" id="addTemplateBtn" class="template-control-btn" title="Tambah template dari teks saat ini">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                  <button type="button" id="resetTemplateBtn" class="template-control-btn" title="Reset ke template default">
+                    <i class="fas fa-redo"></i>
+                  </button>
+                </div>
+              </div>
+              <div id="dynamicTemplateButtons" class="template-buttons">
+                <!-- Template buttons will be generated dynamically -->
+              </div>
+              <div class="template-help">
+                <small><i class="fas fa-info-circle"></i> Tips: Gunakan Ctrl+Enter untuk menambahkan teks saat ini sebagai template</small>
+              </div>
+            </div>
+
+            <textarea id="findingDescription" name="findingDescription" class="form-textarea" placeholder="Deskripsikan temuan K3 secara detail..." rows="4"></textarea>
+
+            <div class="speech-section">
+              <button type="button" id="speechBtn" class="speech-btn">
+                <i class="fas fa-microphone"></i>
+                <span id="speechBtnText">Rekam Suara</span>
+              </button>
+              <div id="speechStatus" class="speech-status"></div>
+            </div>
+          </div>
+
+          <!-- Unit In Charge -->
+          <div class="form-group">
+            <label for="unitInCharge" class="form-label">
+              <i class="fas fa-building"></i>
+              Unit In Charge (UIC)
+            </label>
+            <div class="template-section">
+              <div class="template-header">
+                <span class="template-label">Template UIC</span>
+                <div class="template-controls">
+                  <button type="button" class="template-control-btn" id="clearUnitTemplates">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="template-buttons" id="unitTemplateButtons">
+                <!-- Template buttons will be added here dynamically -->
+              </div>
+            </div>
+            <select id="unitInCharge" name="unitInCharge" class="form-select">
+              <option value="">Pilih UIC...</option>
+              <option value="AIRPORT OPERATION CENTER ">AIRPORT OPERATION CENTER </option>
+              <option value="AIRPORT QUALITY & SAFETY MANAGEMENT SYSTEM">AIRPORT QUALITY & SAFETY MANAGEMENT SYSTEM</option>
+              <option value="BRANCH COMMUNICATION & CSR">BRANCH COMMUNICATION & CSR</option>
+              <option value="LEGAL & COMPLIANCE">LEGAL & COMPLIANCE</option>
+              <option value="ASSET MANAGEMENT & GENERAL SERVICES">ASSET MANAGEMENT & GENERAL SERVICES</option>
+              <option value="AIRPORT OPERATION AIRSIDE">AIRPORT OPERATION AIRSIDE</option>
+              <option value="AIRPORT OPERATION LANDSIDE & TERMINAL SERVICES">AIRPORT OPERATION LANDSIDE & TERMINAL SERVICES</option>
+              <option value="AIRPORT RESCUE & FIRE FIGHTING">AIRPORT RESCUE & FIRE FIGHTING</option>
+              <option value="AIRPORT SECURITY">AIRPORT SECURITY</option>
+              <option value="AIRPORT FACILITIES">AIRPORT FACILITIES</option>
+              <option value="AIRPORT EQUIPMENT">AIRPORT EQUIPMENT</option>
+              <option value="AIRPORT TECHNOLOGY">AIRPORT TECHNOLOGY</option>
+              <option value="AERO COMMERCIAL">AERO COMMERCIAL</option>
+              <option value="NON-AERO COMMERCIAL">NON-AERO COMMERCIAL</option>
+            </select>
+          </div>
+
+          <!-- Lokasi Temuan -->
+          <div class="form-group">
+            <label for="findingLocation" class="form-label">
+              <i class="fas fa-map-marker-alt"></i>
+              Lokasi Temuan
+            </label>
+            <div class="template-section">
+              <div class="template-header">
+                <span class="template-label">Template Lokasi</span>
+                <div class="template-controls">
+                  <button type="button" class="template-control-btn" id="clearLocationTemplates">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="template-buttons" id="locationTemplateButtons">
+                <!-- Template buttons will be added here dynamically -->
+              </div>
+            </div>
+            <select id="findingLocation" name="findingLocation" class="form-select">
+              <option value="">Pilih lokasi temuan...</option>
+              <optgroup label="Terminal">
+                <option value="Check-in Area">Check-in Area</option>
+                <option value="Departure Lounge">Departure Lounge</option>
+                <option value="Arrival Hall">Arrival Hall</option>
+                <option value="Baggage Claim">Baggage Claim</option>
+                <option value="Selasar Terminal">Selasar Terminal</option>
+                <option value="Food Court">Food Court</option>
+                <option value="Toilet Terminal">Toilet Terminal</option>
+              </optgroup>
+              <optgroup label="Airside">
+                <option value="Runway 15">Runway 15</option>
+                <option value="Runway 33">Runway 33</option>
+                <option value="Taxiway Alpha">Taxiway Alpha</option>
+                <option value="Taxiway Bravo">Taxiway Bravo</option>
+                <option value="Apron 1">Apron 1</option>
+                <option value="Apron 2">Apron 2</option>
+                <option value="Ground Support Equipment Area">Ground Support Equipment Area</option>
+              </optgroup>
+              <optgroup label="Landside">
+                <option value="Parkir Kendaraan">Parkir Kendaraan</option>
+                <option value="Akses Jalan Masuk">Akses Jalan Masuk</option>
+                <option value="Akses Jalan Keluar">Akses Jalan Keluar</option>
+                <option value="Area Drop Off">Area Drop Off</option>
+                <option value="Area Pick Up">Area Pick Up</option>
+              </optgroup>
+              <optgroup label="Support Area">
+                <option value="Hanggar Maintenance">Hanggar Maintenance</option>
+                <option value="Workshop">Workshop</option>
+                <option value="Office Building">Office Building</option>
+                <option value="Control Tower">Control Tower</option>
+                <option value="Fire Station">Fire Station</option>
+                <option value="Fuel Farm">Fuel Farm</option>
+                <option value="Cargo Area">Cargo Area</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Risk Assessment -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-exclamation-triangle"></i>
+              Perkiraan Risiko
+            </label>
+
+            <!-- Risk Selection Buttons -->
+            <div class="risk-buttons">
+              <button type="button" class="risk-btn" data-risk="Low to Moderate">Low to Moderate</button>
+              <button type="button" class="risk-btn" data-risk="Moderate">Moderate</button>
+              <button type="button" class="risk-btn" data-risk="Moderate to high">Moderate to high</button>
+            </div>
+
+            <input type="hidden" id="riskAssessment" name="riskAssessment" value="" />
+          </div>
+
+          <!-- Submit Buttons -->
+          <div class="form-actions">
+            <button type="submit" id="submitBtn" class="submit-btn">
+              <i class="fas fa-paper-plane"></i>
+              <span id="submitBtnText">Kirim Laporan Inspeksi</span>
+            </button>
+            <button type="button" id="resetBtn" class="reset-btn spreadsheet-btn">
+              <i class="fas fa-table"></i>
+              Lihat Spreadsheet
+            </button>
+          </div>
+        </form>
+      </main>
+
+      <!-- Loading Overlay -->
+      <div id="loadingOverlay" class="loading-overlay" style="display: none">
+        <div class="loading-spinner">
+          <i class="fas fa-spinner fa-spin"></i>
+          <p>Mengirim laporan...</p>
+        </div>
+      </div>
+
+      <!-- Toast Notifications -->
+      <div id="toastContainer" class="toast-container"></div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <p class="footer-text">© 2025 Sistem Inspeksi K3 Digital Bandara Internasional Minangkabau. All rights reserved. Dervio Rahmatdianto & Fardhan Zikri</p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/speech.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="js/template-manager.js"></script>
+    <script src="js/template-handler.js"></script>
+  </body>
+</html>
